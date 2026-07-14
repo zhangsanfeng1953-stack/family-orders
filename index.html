@@ -1,6 +1,73 @@
 <!DOCTYPE html>
-<html lang=\"zh-CN\">
+<html lang="zh-CN">
 <head>
+<meta charset="UTF-8">
+<title>家庭点餐</title>
+<link rel="stylesheet" href="style.css">
+</head>
 
-<meta charset=\"UTF-8\">
-<title>家庭点餐</title><link rel="stylesheet" href="style.css">
+<body>
+
+<div class="container">
+    <h1>🍽️ 家庭点餐</h1>
+    <p>选择你今天想吃的菜吧</p>
+
+    <input id="customer_name" type="text" placeholder="请输入姓名">
+
+    <input id="dish_name" type="text" placeholder="请输入菜名">
+
+    <textarea id="remark" placeholder="备注（例如：少辣、不放香菜）"></textarea>
+
+    <button onclick="submitOrder()">提交订单</button>
+
+    <p id="message"></p>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+const supabaseUrl = "你的Project URL";
+const supabaseKey = "你的anon public key";
+
+const supabase = window.supabase.createClient(
+    supabaseUrl,
+    supabaseKey
+);
+
+async function submitOrder(){
+
+    const customer_name =
+    document.getElementById("customer_name").value;
+
+    const dish_name =
+    document.getElementById("dish_name").value;
+
+    const remark =
+    document.getElementById("remark").value;
+
+
+    const { error } = await supabase
+    .from("orders")
+    .insert([
+        {
+            customer_name: customer_name,
+            dish_name: dish_name,
+            remark: remark
+        }
+    ]);
+
+
+    if(error){
+        document.getElementById("message").innerHTML =
+        "提交失败：" + error.message;
+    }
+    else{
+        document.getElementById("message").innerHTML =
+        "提交成功！";
+    }
+
+}
+</script>
+
+</body>
+</html>
