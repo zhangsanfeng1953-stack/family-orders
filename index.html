@@ -9,70 +9,112 @@
 <body>
 
 <div class="container">
+
     <h1>🍽️ 家庭点餐</h1>
+
     <p>选择你今天想吃的菜吧</p>
 
-    <input id="customer_name" type="text" placeholder="请输入姓名">
+
+    <input 
+    id="customer_name" 
+    type="text" 
+    placeholder="请输入姓名">
+
 
     <select id="dish_name">
-<option>红烧肉</option>
-<option>宫保鸡丁</option>
-<option>西红柿鸡蛋</option>
+        <option>红烧肉</option>
+        <option>宫保鸡丁</option>
+        <option>西红柿鸡蛋</option>
     </select>
 
-    <textarea id="remark" placeholder="备注（例如：少辣、不放香菜）"></textarea>
 
-    <button onclick="submitOrder()">提交订单</button>
+    <textarea 
+    id="remark" 
+    placeholder="备注（例如：少辣、不放香菜）">
+    </textarea>
+
+
+    <button onclick="submitOrder()">
+        提交订单
+    </button>
+
 
     <p id="message"></p>
+
 </div>
+
+
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<script>
-const supabaseUrl = "https://bismoeyqlvbvcyosppvl.supabase.co";
 
-const supabaseKey = "sb_publishable_Z1Gh6Z55rOvjYSXzw8GhkQ_1lyTohLr";
+<script>
+
+const supabaseUrl = 
+"https://bismoeyqlvbvcyosppvl.supabase.co";
+
+
+const supabaseKey = 
+"sb_publishable_Z1Gh6Z55rOvjYSXzw8GhkQ_1lyTohLr";
+
 
 const supabase = window.supabase.createClient(
     supabaseUrl,
     supabaseKey
 );
 
+
+
 async function submitOrder(){
+
 
     const customer_name =
     document.getElementById("customer_name").value;
 
+
     const dish_name =
     document.getElementById("dish_name").value;
 
+
     const remark =
     document.getElementById("remark").value;
+
 
 
     const { error } = await supabase
     .from("orders")
     .insert([
         {
-            customer_name: customer_name,
-            dish_name: dish_name,
-            remark: remark
+            客户姓名: customer_name,
+            菜名: dish_name,
+            评论: remark
         }
     ]);
 
 
+
     if(error){
+
         document.getElementById("message").innerHTML =
         "提交失败：" + error.message;
-    }
-    else{
+
+    }else{
+
         document.getElementById("message").innerHTML =
         "提交成功！";
+
+        document.getElementById("customer_name").value = "";
+
+        document.getElementById("remark").value = "";
+
     }
 
+
 }
+
+
 </script>
+
 
 </body>
 </html>
