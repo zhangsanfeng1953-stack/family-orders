@@ -1,120 +1,46 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<title>家庭点餐</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#ff6a00">
+  <title>妈妈家常菜 · 家庭点餐</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
+  <main class="app-shell">
+    <header class="hero">
+      <div class="topbar"><button class="round-button" aria-label="返回">‹</button><span>家庭菜单</span><button class="round-button" aria-label="更多">···</button></div>
+      <div class="restaurant">
+        <div class="restaurant-logo" aria-hidden="true">🍲</div>
+        <div><p class="eyebrow">今日家庭厨房 · 正在接单</p><h1>妈妈家常菜</h1><p class="rating"><b>4.9</b> <span>★★★★★</span> · 已有 12 人点过菜</p></div>
+      </div>
+      <div class="info-row"><span>营业中 11:00–20:00</span><span>·</span><span>可提前预约</span></div>
+    </header>
 
-<div class="container">
+    <nav class="tabs" aria-label="页面导航"><a class="active" href="#menu">点菜</a><a href="#how">说明</a><a href="#order">我的订单</a></nav>
 
-    <h1>🍽️ 家庭点餐</h1>
+    <section class="notice"><span>🎁</span><b>今日家庭福利</b><span>每人可选 1–3 道菜，备注可以写口味。</span></section>
 
-    <p>选择你今天想吃的菜吧</p>
+    <section id="menu" class="content">
+      <div class="section-title"><div><p class="eyebrow">本日推荐</p><h2>想吃什么？</h2></div><span class="tag">每天更新</span></div>
+      <div class="menu-grid" id="menuGrid"></div>
+    </section>
 
+    <section id="how" class="order-panel">
+      <div class="panel-heading"><div><p class="eyebrow">确认订单</p><h2>告诉厨房你的选择</h2></div><span id="selectedCount" class="count-badge">已选 0 道</span></div>
+      <form id="orderForm">
+        <label>你的名字<input id="customer_name" name="customer_name" autocomplete="name" placeholder="例如：小明" required maxlength="20"></label>
+        <label>已选菜品<input id="dish_name" name="dish_name" placeholder="请先点选上方菜品" required readonly></label>
+        <label>口味备注<textarea id="remark" name="remark" placeholder="例如：少辣、不放香菜、想多吃一点" maxlength="100"></textarea></label>
+        <button id="submitButton" class="submit-button" type="submit"><span>提交给厨房</span><b>→</b></button>
+        <p id="message" class="message" role="status" aria-live="polite"></p>
+      </form>
+    </section>
 
-    <input 
-    id="customer_name" 
-    type="text" 
-    placeholder="请输入姓名">
-
-
-    <select id="dish_name">
-        <option>红烧肉</option>
-        <option>宫保鸡丁</option>
-        <option>西红柿鸡蛋</option>
-    </select>
-
-
-    <textarea 
-    id="remark" 
-    placeholder="备注（例如：少辣、不放香菜）">
-    </textarea>
-
-
-    <button onclick="submitOrder()">
-        提交订单
-    </button>
-
-
-    <p id="message"></p>
-
-</div>
-
-
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-
-<script>
-
-const supabaseUrl = 
-"https://bismoeyqlvbvcyosppvl.supabase.co";
-
-
-const supabaseKey = 
-"sb_publishable_Z1Gh6Z55rOvjYSXzw8GhkQ_1lyTohLr";
-
-
-const supabase = window.supabase.createClient(
-    supabaseUrl,
-    supabaseKey
-);
-
-
-
-async function submitOrder(){
-
-
-    const customer_name =
-    document.getElementById("customer_name").value;
-
-
-    const dish_name =
-    document.getElementById("dish_name").value;
-
-
-    const remark =
-    document.getElementById("remark").value;
-
-
-
-    const { error } = await supabase
-    .from("orders")
-    .insert([
-        {
-            客户姓名: customer_name,
-            菜名: dish_name,
-            评论: remark
-        }
-    ]);
-
-
-
-    if(error){
-
-        document.getElementById("message").innerHTML =
-        "提交失败：" + error.message;
-
-    }else{
-
-        document.getElementById("message").innerHTML =
-        "提交成功！";
-
-        document.getElementById("customer_name").value = "";
-
-        document.getElementById("remark").value = "";
-
-    }
-
-
-}
-
-
-</script>
-
-
+    <section id="order" class="tip-card"><span>💡</span><p><b>提交后怎么办？</b><br>厨房会在 Supabase 后台看到你的姓名、菜品和备注。</p></section>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="script.js"></script>
 </body>
 </html>
