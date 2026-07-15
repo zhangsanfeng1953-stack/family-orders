@@ -4,42 +4,94 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#ff6a00">
-  <title>妈妈家常菜 · 家庭点餐</title>
+  <title>家里粤菜点单 · 家庭点餐</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <main class="app-shell">
-    <header class="hero">
-      <div class="topbar"><button class="round-button" aria-label="返回">‹</button><span>家庭菜单</span><button class="round-button" aria-label="更多">···</button></div>
-      <div class="restaurant">
-        <div class="restaurant-logo" aria-hidden="true">🍲</div>
-        <div><p class="eyebrow">今日家庭厨房 · 正在接单</p><h1>妈妈家常菜</h1><p class="rating"><b>4.9</b> <span>★★★★★</span> · 已有 12 人点过菜</p></div>
+    <header class="shop-header">
+      <div class="topbar">
+        <button class="icon-button" type="button" aria-label="返回">‹</button>
+        <div class="search-pill">🔍 今天想吃什么粤菜</div>
+        <button class="icon-button" type="button" aria-label="收藏">☆</button>
+        <button class="icon-button" type="button" aria-label="更多">···</button>
       </div>
-      <div class="info-row"><span>营业中 11:00–20:00</span><span>·</span><span>可提前预约</span></div>
+      <section class="shop-card">
+        <div class="brand-row">
+          <div class="brand-logo">粤</div>
+          <div>
+            <p class="eyebrow">家庭厨房 · 今日可点</p>
+            <h1>家里粤菜小馆</h1>
+            <p class="rating"><b>4.9</b> ★★★★★ <span>家人好评 99+</span></p>
+          </div>
+        </div>
+        <div class="meta-row">
+          <span>营业中 10:00-22:00</span>
+          <span>全场 ¥1</span>
+          <span>后台实时查看</span>
+        </div>
+      </section>
     </header>
 
-    <nav class="tabs" aria-label="页面导航"><a class="active" href="#menu">点菜</a><a href="#how">说明</a><a href="#order">我的订单</a></nav>
+    <nav class="tabs" aria-label="页面导航">
+      <a class="active" href="#menu">点菜</a>
+      <a href="#cart">购物车</a>
+      <a href="#order">提交</a>
+    </nav>
 
-    <section class="notice"><span>🎁</span><b>今日家庭福利</b><span>每人可选 1–3 道菜，备注可以写口味。</span></section>
-
-    <section id="menu" class="content">
-      <div class="section-title"><div><p class="eyebrow">本日推荐</p><h2>想吃什么？</h2></div><span class="tag">每天更新</span></div>
-      <div class="menu-grid" id="menuGrid"></div>
+    <section class="coupon-strip">
+      <span>专属优惠</span>
+      <b>家庭点餐统一 ¥1/份</b>
+      <small>只统计点了什么，不做真实支付</small>
     </section>
 
-    <section id="how" class="order-panel">
-      <div class="panel-heading"><div><p class="eyebrow">确认订单</p><h2>告诉厨房你的选择</h2></div><span id="selectedCount" class="count-badge">已选 0 道</span></div>
+    <section id="menu" class="menu-layout">
+      <aside class="category-rail" id="categoryRail" aria-label="菜品分类"></aside>
+      <section class="dish-area">
+        <div class="section-title">
+          <div>
+            <p class="eyebrow">20 道常见粤菜</p>
+            <h2>有菜有肉，加入购物车</h2>
+          </div>
+          <span class="tag">实物图</span>
+        </div>
+        <div class="dish-list" id="menuGrid"></div>
+      </section>
+    </section>
+
+    <section id="cart" class="cart-panel">
+      <div class="panel-heading">
+        <div>
+          <p class="eyebrow">购物车</p>
+          <h2>已选菜品</h2>
+        </div>
+        <span id="selectedCount" class="count-badge">0 份</span>
+      </div>
+      <div id="cartItems" class="cart-items empty">还没有加入菜品</div>
+      <div class="cart-total"><span>合计</span><b id="cartTotal">¥0</b></div>
+    </section>
+
+    <section id="order" class="order-panel">
+      <div class="panel-heading">
+        <div>
+          <p class="eyebrow">确认订单</p>
+          <h2>提交给厨房后台</h2>
+        </div>
+      </div>
       <form id="orderForm">
         <label>你的名字<input id="customer_name" name="customer_name" autocomplete="name" placeholder="例如：小明" required maxlength="20"></label>
-        <label>已选菜品<input id="dish_name" name="dish_name" placeholder="请先点选上方菜品" required readonly></label>
-        <label>口味备注<textarea id="remark" name="remark" placeholder="例如：少辣、不放香菜、想多吃一点" maxlength="100"></textarea></label>
-        <button id="submitButton" class="submit-button" type="submit"><span>提交给厨房</span><b>→</b></button>
+        <label>已选菜品<input id="dish_name" name="dish_name" placeholder="请先加入购物车" required readonly></label>
+        <label>口味备注<textarea id="remark" name="remark" placeholder="例如：少盐、不要葱、米饭多一点" maxlength="120"></textarea></label>
+        <button id="submitButton" class="submit-button" type="submit"><span>提交订单</span><b>→</b></button>
         <p id="message" class="message" role="status" aria-live="polite"></p>
       </form>
     </section>
-
-    <section id="order" class="tip-card"><span>💡</span><p><b>提交后怎么办？</b><br>厨房会在 Supabase 后台看到你的姓名、菜品和备注。</p></section>
   </main>
+
+  <div class="floating-cart" aria-hidden="false">
+    <a href="#cart"><span>🛒</span><b id="floatCount">0</b></a>
+  </div>
+
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="script.js"></script>
 </body>
