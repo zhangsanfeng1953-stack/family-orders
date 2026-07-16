@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#ff6a00">
+  <title>家庭点餐后台</title>
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <main class="admin-shell">
+    <header class="admin-header">
+      <div>
+        <p class="eyebrow">家庭厨房 · 订单中心</p>
+        <h1>点餐后台</h1>
+        <p class="subtitle">打开这个页面，就能快速查看家人点了什么。</p>
+      </div>
+      <a class="front-link" href="index.html">返回点餐页</a>
+    </header>
+
+    <section class="stats" aria-label="订单统计">
+      <article><span>今日订单</span><strong id="todayOrders">0</strong></article>
+      <article><span>今日菜品</span><strong id="todayDishes">0</strong></article>
+      <article><span>全部订单</span><strong id="totalOrders">0</strong></article>
+      <article><span>最后更新</span><strong id="lastUpdated">--:--</strong></article>
+    </section>
+
+    <section class="toolbar">
+      <label class="search-box">
+        <span>⌕</span>
+        <input id="searchInput" type="search" placeholder="搜索姓名、菜品或备注" autocomplete="off">
+      </label>
+      <label class="filter-box">
+        <span>查看</span>
+        <select id="dateFilter">
+          <option value="today">今天</option>
+          <option value="all">全部</option>
+        </select>
+      </label>
+      <button id="refreshButton" class="refresh-button" type="button">立即刷新</button>
+    </section>
+
+    <section class="orders-panel">
+      <div class="panel-heading">
+        <div>
+          <p class="eyebrow">实时订单</p>
+          <h2>最新订单在最上面</h2>
+        </div>
+        <span id="autoRefreshState" class="live-badge"><i></i> 自动更新</span>
+      </div>
+
+      <p id="statusMessage" class="status-message" role="status" aria-live="polite">正在读取订单…</p>
+      <div id="ordersList" class="orders-list"></div>
+    </section>
+
+    <footer>
+      <span>家庭内部使用</span>
+      <span>订单来自 Supabase</span>
+    </footer>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="admin.js"></script>
+</body>
+</html>
